@@ -1,0 +1,37 @@
+{
+  "manifest_version": 2,
+  "name": "BetterTwitter",
+  "version": "1.0.0",
+  "description": "An extension for a better twitter, with plugins and themes",
+
+  "permissions": ["activeTab", "contextMenus", "scripting", "storage", "tabs"],
+
+  "content_scripts": [
+    {
+      "matches": ["*://twitter.com/*", "*://mobile.twitter.com/*"],
+      "js": ["content-script.js"]
+    }
+  ],
+
+  "browser_action": {
+    "default_title": "BetterTwitter",
+    "default_popup": "popup/popup.html"
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "bettertwitter@nethermc.fr",
+      "strict_min_version": "42.0"
+    }
+  }
+
+}

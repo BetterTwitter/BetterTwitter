@@ -1,0 +1,155 @@
+@import url(https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css);
+
+@font-face {
+    font-family: TwitterChirp;
+    src: url("https://abs.twimg.com/fonts/v2/chirp-regular-web.woff") format("woff");
+    font-weight: 400;
+}
+
+:root {
+    --dark-color: #d6d9db;
+    --dark-background: #000;
+}
+
+body {
+    font-family: "TwitterChirp", -apple-system, "Segoe UI", "Ubuntu", "Roboto", Arial, sans-serif;
+}
+
+body.dark {
+    color: var(--dark-color);
+    background: var(--dark-background);
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 25px 100px;
+    align-items: center;
+}
+
+.header-title h2 {
+    font-size: 1.5rem;
+    margin-bottom: .2rem;
+}
+
+.toggle-theme {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+body.dark .toggle-theme svg {
+    fill: var(--dark-color);
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    padding: 25px 250px;
+    gap: 25px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.list-title {
+    font-size: 1.4rem;
+}
+
+button {
+    background-color: #1a8cd8;
+    color: #fff;
+    font: inherit;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+input:not([type="checkbox"], [type="radio"]) {
+    border-radius: .25rem;
+    font: inherit;
+    border: 1px #333639 solid;
+    background: none;
+    color: #000;
+    padding: 8px;
+}
+
+body.dark input:not([type="checkbox"], [type="radio"]) {
+    color: var(--dark-color);
+}
+
+/*input[type="checkbox"], input[type="radio"] {
+    width: 20px;
+    height: 20px;
+}
+*/
+
+.dialog {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-container {
+    width: fit-content;
+    height: fit-content;
+    position: fixed;
+    z-index: 999999;
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 15px;
+}
+
+body.dark .dialog-container {
+    background-color: #000;
+}
+
+.dialog .bg-color {
+    position: fixed;
+    z-index: 999999;
+    background-color: rgb(36, 45, 52, .7);
+    inset: 0;
+}
+
+.dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-weight: 700;
+    padding-bottom: 15px;
+}
+
+.dialog-header svg {
+    width: 25px;
+    height: 25px;
+    fill: var(--dark-background);
+    padding: 2px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.dialog-header svg:hover {
+    background-color: #181919;
+}
+
+body.dark .dialog-header svg {
+    fill: #fff;
+}
+
+.dialog-content {
+    padding: 5px;
+}
