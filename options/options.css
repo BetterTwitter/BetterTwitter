@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: TwitterChirp;
-    src: url("https://abs.twimg.com/fonts/v2/chirp-regular-web.woff") format("woff");
+    src: url(../fonts/chirp-regular-web.woff) format("woff");
     font-weight: 400;
 }
 
@@ -13,6 +13,7 @@
 
 body {
     font-family: "TwitterChirp", -apple-system, "Segoe UI", "Ubuntu", "Roboto", Arial, sans-serif;
+    font-size: 1rem;
 }
 
 body.dark {
@@ -64,7 +65,8 @@ body.dark .toggle-theme svg {
 button {
     background-color: #1a8cd8;
     color: #fff;
-    font: inherit;
+    font-size: 1rem;
+    font-family: inherit;
     padding: 8px 16px;
     border-radius: 9999px;
     border: none;
@@ -75,24 +77,19 @@ button:disabled {
     cursor: default;
 }
 
-input:not([type="checkbox"], [type="radio"]) {
+input:not([type="checkbox"], [type="radio"]), textarea {
     border-radius: .25rem;
-    font: inherit;
+    font-size: 1rem;
+    font-family: inherit;
     border: 1px #333639 solid;
     background: none;
     color: #000;
     padding: 8px;
 }
 
-body.dark input:not([type="checkbox"], [type="radio"]) {
+body.dark input:not([type="checkbox"], [type="radio"]), body.dark textarea {
     color: var(--dark-color);
 }
-
-/*input[type="checkbox"], input[type="radio"] {
-    width: 20px;
-    height: 20px;
-}
-*/
 
 .dialog {
     width: 100%;
@@ -143,6 +140,10 @@ body.dark .dialog-container {
 }
 
 .dialog-header svg:hover {
+    background-color: #e6e7e7;
+}
+
+body.dark .dialog-header svg:hover {
     background-color: #181919;
 }
 
