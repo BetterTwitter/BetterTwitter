@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "BetterTwitter",
   "version": "1.0.0",
   "description": "An extension for a better twitter, with plugins and themes",
@@ -13,7 +13,11 @@
     }
   ],
 
-  "browser_action": {
+  "host_permissions": [
+    "*://twitter.com/*", "*://mobile.twitter.com/*"
+  ],
+
+  "action": {
     "default_title": "BetterTwitter",
     "default_popup": "popup/popup.html"
   },
@@ -24,14 +28,7 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
-  },
-
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "bettertwitter@nethermc.fr",
-      "strict_min_version": "42.0"
-    }
+    "service_worker": "background.js"
   }
 
 }
