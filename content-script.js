@@ -1,3 +1,6 @@
+if (!browser) var browser = chrome;
+
+(async () => await browser.runtime.sendMessage({ action: 'INJECT_CSS' }))();
 const BT = {
     Plugin: class {
         /**
@@ -43,16 +46,3 @@ const BT = {
         });
     }
 };
-
-new BT.Plugin({
-    name: 'a',
-    description: 'a'
-});
-
-
-const plugin = new BT.Plugin({
-    name: 'plugin',
-    description: 'this is my plugin',
-});
-
-window.BT.openDialog('lol', 'oui');
