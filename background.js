@@ -1,41 +1,42 @@
+if (!browser) var browser = chrome;
+
 const TWITTER_URLS = ['*://twitter.com/*', '*://mobile.twitter.com/*'];
 const ITEMS_IDS = {
-    MANAGE_PLUGINS_THEMES: 'MANAGE_PLUGINS_THEMES',
+    BT_OPTIONS: 'BT_OPTIONS',
 };
 
 function onCreated() {
     if (browser.runtime.lastError) {
-        console.log(`Error: ${browser.runtime.lastError}`);
+        console.error(browser.runtime.lastError.message);
     } else {
         console.log('Item created successfully');
     }
 }
 
 browser.contextMenus.create({
-    id: ITEMS_IDS.MANAGE_PLUGINS_THEMES,
-    title: 'Manage plugins and themes',
+    id: ITEMS_IDS.BT_OPTIONS,
+    title: 'Manage BetterTwitter options',
     contexts: ['all'],
     documentUrlPatterns: TWITTER_URLS
 }, onCreated);
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
-        case 'log-selection':
-            console.log(info.selectionText);
+        case ITEMS_IDS.BT_OPTIONS:
+            chrome.runtime.openOptionsPage();
             break;
-        // …
     }
 });
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
-const css = browser.tabs.insertCSS({
-    code: `body {
-  font-size: 2rem;
-}`
-});
-css.then(null, onError);
 
-browser.runtime.onMessage.addListener((message) => {
-    console.log(message);
+browser.runtime.onMessage.addListener(async (message, sender) => {
+    const { action } = message;
+    if (action === 'INJECT_CSS') {
+        const css = (await browser.storage.sync.get()).custom_css || '';
+        await chrome.scripting.insertCSS({
+            origin: "USER", css,
+            target: {
+                tabId: sender.tab.id
+            }
+        });
+    }
 });
