@@ -1,3 +1,5 @@
+if (!browser) var browser = chrome;
+
 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.body.classList.add('dark');
 }
@@ -11,7 +13,7 @@ document.querySelector('.toggle-theme')?.addEventListener('click', () => {
 });
 
 (async () => {
-    document.querySelector('.custom-css .list-content textarea').textContent = await browser.storage.sync.get().custom_css;
+    document.querySelector('.custom-css .list-content textarea').value = (await browser.storage.sync.get()).custom_css;
 })();
 
 const openDialog = (title, content) => {
@@ -44,7 +46,7 @@ const openDialog = (title, content) => {
 
 const plugins = [
     {
-        name: 'Salut',
+        name: 'Hello',
         url: 'https://github.com/',
         enabled: true,
         plugin: `const plugin = new BT.Plugin({
@@ -52,14 +54,16 @@ const plugins = [
     description: 'this is my plugin',
 });
 
-BT.openDialog('lol', 'oui');`
+BT.openDialog('idk', 'idk');`,
+        description: 'idk'
     }
 ];
 const themes = [
     {
-        name: 'Salut',
+        name: 'Hello',
         url: 'https://github.com/',
-        enabled: true
+        enabled: true,
+        description: 'idk'
     }
 ];
 let pluginsListHtml = '';
@@ -68,17 +72,33 @@ let themesListHtml = '';
 pluginsListHtml += plugins.map(plugin => {
     let id = plugin.name.toLowerCase().replaceAll(' ', '-') + '-plugin';
     return `
-<label for="${id}">
-    <input type="checkbox" id="${id}" checked="${plugin.enabled}" />&nbsp;
-    <span>${plugin.name}</span>
+<label for="${id}" style="display: flex; justify-content: space-between; align-items: center">
+    <div style="display: flex; gap: 8px;">
+        <input type="checkbox" id="${id}" checked="${plugin.enabled}" />
+        <div style="display: flex; flex-direction: column">
+            <span style="font-size: 1.1rem">${plugin.name}</span>
+            <span>${plugin.description}</span>
+        </div>
+    </div>
+    <div class="links">
+        <a href="#">a</a>
+    </div>
 </label>`;
 });
 themesListHtml += themes.map(theme => {
-    let id = theme.name.toLowerCase().replaceAll(' ', '-') + '-plugin';
+    let id = theme.name.toLowerCase().replaceAll(' ', '-') + '-theme';
     return `
-<label for="${id}">
-    <input type="checkbox" id="${id}" checked="${theme.enabled}" />&nbsp;
-    <span>${theme.name}</span>
+<label for="${id}" style="display: flex; justify-content: space-between; align-items: center">
+    <div style="display: flex; gap: 8px;">
+        <input type="checkbox" id="${id}" checked="${theme.enabled}" />
+        <div style="display: flex; flex-direction: column">
+            <span style="font-size: 1.1rem">${theme.name}</span>
+            <span>${theme.description}</span>
+        </div>
+    </div>
+    <div class="links">
+        <a href="#">a</a>
+    </div>
 </label>`;
 });
 
@@ -86,22 +106,28 @@ document.querySelector('.plugins-list .list-content').innerHTML = pluginsListHtm
 document.querySelector('.themes-list .list-content').innerHTML = themesListHtml;
 
 document.querySelector('.plugins-list button').addEventListener('click', () => {
-    openDialog('Add a plugin', `<div class="dialog-content" style="display: flex; flex-direction: column; gap: 10px;">
+    openDialog(
+        'Add a plugin',
+        `<div class="dialog-content" style="display: flex; flex-direction: column; gap: 10px;">
                 <input type="url" placeholder="Plugin URL" name="url" autofocus style="width: 400px;" />
                 <button>Add plugin</button>
-            </div>`);
+            </div>`
+    );
 });
 document.querySelector('.themes-list button').addEventListener('click', () => {
-    openDialog('Add a theme', `<div class="dialog-content" style="display: flex; flex-direction: column; gap: 10px;">
+    openDialog(
+        'Add a theme',
+        `<div class="dialog-content" style="display: flex; flex-direction: column; gap: 10px;">
                 <input type="url" placeholder="Theme URL" name="url" autofocus style="width: 400px;" />
                 <button>Add theme</button>
-            </div>`);
+            </div>`
+    );
 });
 document.querySelector('.custom-css button').addEventListener('click', async () => {
     document.querySelector('.custom-css button').setAttribute('disabled', '');
     document.querySelector('.custom-css .list-content textarea').setAttribute('disabled', '');
     await browser.storage.sync.set({
-        custom_css: document.querySelector('.custom-css .list-content textarea').textContent
+        custom_css: document.querySelector('.custom-css .list-content textarea').value
     }).then(() => {
         document.querySelector('.custom-css button').removeAttribute('disabled');
         document.querySelector('.custom-css .list-content textarea').removeAttribute('disabled');
